@@ -1,8 +1,5 @@
 restaurants = ["In N Out", "Raising Cane's", "Chick Fil A", "McDonalds", "Taco Bell", "Burger King"]
 
-print("Welcome to your restaurant list. Your current restaurant ranking is" + str(restaurants) + ".")
-newrestaurant = input("What restaurant would you like to add?")
-
 def rankrestaurant(newrestaurant, restaurants):
     for i in range(len(restaurants)):
         rank = input("Do you like A) " + newrestaurant + " or B) " + restaurants[i] + " more? A/B")
@@ -10,7 +7,21 @@ def rankrestaurant(newrestaurant, restaurants):
             restaurants.insert(i, newrestaurant)
             break
         elif rank == "B" or rank == "b":
-            continue
+            if i + 1 == len(restaurants):
+                restaurants.insert((i + 1), newrestaurant)
     return restaurants
 
-print("Your current restaurant ranking is" + str(rankrestaurant(newrestaurant, restaurants)) + ".")
+print("Welcome to your restaurant list. Your current restaurant ranking is" + (', '.join(restaurants)) + ".")
+addsort = input("Would you like to add a new restaurant or sort your existing restaurants? a/s")
+
+if addsort == "a" or addsort == "A":
+    newrestaurant = input("What restaurant would you like to add?")
+    print("Your new restaurant ranking is " + (', '.join(rankrestaurant(newrestaurant, restaurants))) + ".")
+else:
+    oldrestaurants = restaurants
+    restaurants = [oldrestaurants[0]]
+    del oldrestaurants[0]
+    while len(oldrestaurants) != 0:
+        rankrestaurant(oldrestaurants[0], restaurants)
+        del oldrestaurants[0]
+    print("Your new restaurant ranking is " + (', '.join(restaurants)) + ".")
